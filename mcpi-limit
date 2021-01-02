@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+. ./mcpi.sh
+
+LIMIT=${1:-30}
+FILE=mcpi-limit.count
+MINUTES=$LIMIT
+
+if [[ -f "$FILE" && $(find "$FILE" -mtime 0) ]]; then
+  MINUTES=$(cat "$FILE")
+
+  if [[ "$MINUTES" -lt 1 ]]; then
+    ./mcpi-kill
+  elif [[ "$MINUTES" -le 5 ]]; then
+    mcpi-message "$MINUTES minutes left"
+  fi
+
+else
+  mcpi-message "Welcome to Minecraft!"
+fi
+ 
+echo $(($MINUTES - 1)) > "$FILE"
