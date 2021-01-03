@@ -7,7 +7,8 @@ LIMIT=${1:-30}
 FILE=mcpi-limit.count
 MINUTES=$LIMIT
 
-if [[ -f "$FILE" && $(find "$FILE" -mtime 0) ]]; then
+# count file exists and modified today
+if [[ -f "$FILE" && $(date -r "$FILE" -Idate) == $(date -Idate) ]]; then
   MINUTES=$(cat "$FILE")
 
   if [[ "$MINUTES" -lt 1 ]]; then
