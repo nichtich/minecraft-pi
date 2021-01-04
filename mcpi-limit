@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-. ./mcpi.sh
-
 LIMIT=${1:-30}
 FILE=mcpi-limit.count
 MINUTES=$LIMIT
@@ -14,11 +12,13 @@ if [[ -f "$FILE" && $(date -r "$FILE" -Idate) == $(date -Idate) ]]; then
   if [[ "$MINUTES" -lt 1 ]]; then
     ./mcpi-kill
   elif [[ "$MINUTES" -le 5 ]]; then
-    mcpi-message "$MINUTES minutes left"
+    ./mcpi-message "$MINUTES minutes left"
+  else
+    ./mcpi-message # checks if Minecraft is running
   fi
 
 else
-  mcpi-message "Welcome to Minecraft!"
+  ./mcpi-message "Welcome to Minecraft!"
 fi
  
 echo $(($MINUTES - 1)) > "$FILE"

@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+# exit code of this script can be used to check of minecraft is running
+
+if [ $# -gt 0 ]; then
+  python <<PYTHON 2>/dev/null
+from mcpi.minecraft import Minecraft
+Minecraft.create().postToChat("$1")
+PYTHON
+else
+  # just connect without message
+  python <<PYTHON 2>/dev/null
+from mcpi.minecraft import Minecraft
+Minecraft.create()
+PYTHON
+fi
+
