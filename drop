@@ -1,0 +1,22 @@
+#!/usr/bin/python
+
+from sys import argv
+from mcpi.minecraft import Minecraft
+
+material = {
+  "tnt": 46,
+  "lava": 10,
+  "water": 8,
+  "air": 0
+}
+
+if len(argv) > 1:
+  _, name = argv
+  if name in material:
+    mc = Minecraft.create()
+    x, y, z = mc.player.getPos()
+    mc.setBlock(x, y-1, z, material[name], 1)
+    print "dropped %s" % name
+    exit()
+
+print "Usage: drop %s" % "|".join(material.keys())
